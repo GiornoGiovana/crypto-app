@@ -1,0 +1,9 @@
+import React from "react";
+
+export const CryptoDetails = () => {
+  return (
+    <div>
+      <h1>CryptoDetails</h1>
+    </div>
+  );
+};
