@@ -6,7 +6,6 @@ import { CryptoDetails } from "./components/CryptoDetails";
 import { Homepage } from "./components/Homepage";
 import { Cryptocurrencies } from "./components/Cryptocurrencies";
 import { News } from "./components/News";
-import { Exchanges } from "./components/Exchanges";
 
 function App() {
   return (
@@ -20,9 +19,6 @@ function App() {
             <Switch>
               <Route exact path="/">
                 <Homepage />
-              </Route>
-              <Route exact path="/exchanges">
-                <Exchanges />
               </Route>
               <Route exact path="/cryptocurrencies">
                 <Cryptocurrencies />
@@ -46,7 +42,6 @@ function App() {
           </Typography.Title>
           <Space>
             <Link to="/">Home</Link>
-            <Link to="/exchanges">Exchanges</Link>
             <Link to="/news">News</Link>
           </Space>
         </div>

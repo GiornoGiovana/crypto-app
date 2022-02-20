@@ -42,7 +42,7 @@ export const CryptoDetails = () => {
     { title: 'Price to USD', value: `$ ${cryptoDetails?.price && millify(cryptoDetails?.price)}`, icon: <DollarCircleOutlined /> },
     { title: 'Rank', value: cryptoDetails?.rank, icon: <NumberOutlined /> },
     { title: 'Market Cap', value: `$ ${cryptoDetails?.marketCap && millify(cryptoDetails?.marketCap)}`, icon: <DollarCircleOutlined /> },
-    { title: 'All-time-high(daily avg.)', value: `$ ${millify(cryptoDetails?.allTimeHigh.price)}`, icon: <TrophyOutlined /> },
+    { title: 'All-time-high(daily avg.)', value: `$ ${millify(cryptoDetails?.allTimeHigh?.price)}`, icon: <TrophyOutlined /> },
   ];
 
     //prettier-ignore
@@ -50,8 +50,8 @@ export const CryptoDetails = () => {
     { title: 'Number Of Markets', value: cryptoDetails?.numberOfMarkets, icon: <FundOutlined /> },
     { title: 'Number Of Exchanges', value: cryptoDetails?.numberOfExchanges, icon: <MoneyCollectOutlined /> },
     { title: 'Aprroved Supply', value: cryptoDetails?.approvedSupply ? <CheckOutlined /> : <StopOutlined />, icon: <ExclamationCircleOutlined /> },
-    { title: 'Total Supply', value: `$ ${millify(cryptoDetails?.supply.total)}`, icon: <ExclamationCircleOutlined /> },
-    { title: 'Circulating Supply', value: `$ ${millify(cryptoDetails?.supply.circulating)}`, icon: <ExclamationCircleOutlined /> },
+    { title: 'Total Supply', value: `$ ${millify(cryptoDetails?.supply?.total ? cryptoDetails?.supply?.total : "0")}`, icon: <ExclamationCircleOutlined /> },
+    { title: 'Circulating Supply', value: `$ ${millify(cryptoDetails?.supply?.circulating)}`, icon: <ExclamationCircleOutlined /> },
   ];
   }
 
@@ -59,7 +59,7 @@ export const CryptoDetails = () => {
     <Col className="coin-detail-container">
       <Col className="coin-heading-container">
         <Title level={2} className="coin-name">
-          {data?.data?.coin.name} ({data?.data?.coin.symbol}) Price
+          {data?.data?.coin.name} ({data?.data?.coin?.symbol}) Price
         </Title>
         <p>
           {cryptoDetails?.name} live price in US dolars. View value statistics,
@@ -78,7 +78,7 @@ export const CryptoDetails = () => {
           </Option>
         ))}
       </Select>
-      {coinHistory && (
+      {coinHistory && !isFetching && (
         <LineChart
           coinHistory={coinHistory}
           currentPrice={millify(cryptoDetails?.price)}
@@ -110,15 +110,18 @@ export const CryptoDetails = () => {
             </Title>
             <p>An overview showing the stats of all cryptocurrencies</p>
           </Col>
-          {genericStats.map(({ icon, title, value }) => (
-            <Col className="coin-stats">
-              <Col className="coin-stats-name">
-                <Text>{icon}</Text>
-                <Text>{title}</Text>
+          {genericStats.map(({ icon, title, value }) => {
+            if (value === "$ 0") return;
+            return (
+              <Col className="coin-stats">
+                <Col className="coin-stats-name">
+                  <Text>{icon}</Text>
+                  <Text>{title}</Text>
+                </Col>
+                <Text className="stats">{value}</Text>
               </Col>
-              <Text className="stats">{value}</Text>
-            </Col>
-          ))}
+            );
+          })}
         </Col>
       </Col>
       <Col className="coin-desc-link">

@@ -9,7 +9,7 @@ export const LineChart = ({ coinHistory, currentPrice, coinName }) => {
 
   coinHistory?.data?.history?.forEach((elem) => {
     coinPrice.push(elem.price);
-    coinTimeStamp.push(new Date(elem.timestamp).toLocaleDateString());
+    coinTimeStamp.push(new Date(elem.timestamp).toLocaleTimeString());
   });
 
   const data = {
